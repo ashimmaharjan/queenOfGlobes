@@ -5,12 +5,13 @@ import Navbar from "./components/navbar";
 import About from "./pages/About";
 import heroBackground from "./images/hero-bg.jpg";
 import Home from "./pages/Home";
+import Signin from "./pages/Signin";
 
 function App() {
   return (
     <Router>
       <main
-        className="w-screen h-screen bg-gray-500 bg-blend-multiply"
+        className="w-screen min-h-[100vh] bg-gray-500 bg-blend-multiply"
         style={{
           backgroundImage: `url(${heroBackground})`,
           backgroundSize: "cover",
@@ -18,13 +19,14 @@ function App() {
           backgroundPosition: "center",
         }}
       >
-        <section className="w-full h-full">
-          <Navbar />
+        <Navbar />
+        <div className="mt-[108px]">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/signin" element={<Signin />} />
           </Routes>
-        </section>
+        </div>
       </main>
     </Router>
   );

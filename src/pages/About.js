@@ -1,9 +1,9 @@
 const About = () => {
   return (
     <section>
-      <div className="text-white w-[60%] p-28">
+      <div className="text-white w-[70%] px-28 py-16">
         <h1 className="heading text-[50px] leading-[85px]">About Us</h1>
-        <div className="text-[22px] leading-[25.78px] body-text flex flex-col gap-10 mt-10">
+        <div className="text-[22px] body-text flex flex-col gap-10 mt-10">
           <p>
             I&apos;m Leah and yes&sbquo; I&apos;m the Queen of Snow
             Globes&sbquo; at least! Queen of Snow Globes is the culmination of
