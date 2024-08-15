@@ -6,6 +6,7 @@ import About from "./pages/About";
 import heroBackground from "./images/hero-bg.jpg";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </div>
       </main>

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import userImage from "../images/user-image.jpeg";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const sessionId = sessionStorage.getItem("sessionId");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +26,6 @@ const Navbar = () => {
     { label: "Gallery", link: "/gallery" },
     { label: "About", link: "/about" },
     { label: "Shop", link: "/shop" },
-    { label: "Sign In", link: "/signin" },
   ];
 
   const socialLinks = [
@@ -39,7 +41,7 @@ const Navbar = () => {
       flex justify-between items-center w-screen px-10 py-5 text-white`}
     >
       <a href="/" className="font-serif text-[40px] leading-[68px] heading">
-        Queen of Snow Globes
+        {sessionId !== null ? "CaseCrafter" : "Queen of Snow Globes"}
       </a>
 
       <div className="flex items-center gap-8">
@@ -48,9 +50,26 @@ const Navbar = () => {
             {link.label}
           </Link>
         ))}
+
+        {!sessionId && (
+          <Link to="/signin" className="text-xl">
+            Sign In
+          </Link>
+        )}
       </div>
 
       <div className="flex items-center gap-4">
+        {sessionId && (
+          <div className="w-10 h-10 rounded-full bg-[#D9D9D9] p-[2px] overflow-hidden cursor-pointer">
+            <img
+              src={userImage}
+              className="object-cover w-full h-full rounded-full"
+              alt="/user-image"
+              srcset=""
+            />
+          </div>
+        )}
+
         {socialLinks.map((socialLink, index) => (
           <a
             className="text-2xl"

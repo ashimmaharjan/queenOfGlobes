@@ -33,8 +33,11 @@ const Signin = () => {
       });
       const data = await response.json();
       if (response.ok) {
+        sessionStorage.setItem("sessionId", data.userId);
         toast.success("Success! Redirecting to dashboard...");
-        setTimeout(() => {}, 500);
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 500);
       } else {
         toast.error(data.message || "An error occurred. Please try again.");
       }

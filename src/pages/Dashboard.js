@@ -1,7 +1,7 @@
 import { FaCheck } from "react-icons/fa";
 import { PiPenNibLight, PiChats, PiPackageLight } from "react-icons/pi";
 
-const Home = () => {
+const Dashboard = () => {
   const features = [
     {
       label: "Design",
@@ -31,9 +31,15 @@ const Home = () => {
           Create your own snow globe
         </p>
 
-        <button className="bg-[#85B6FF] text-black w-[180px] h-[57px] rounded-[40px] text-lg mt-10 font-bold">
-          Get Started
-        </button>
+        <div className="mt-10 w-full h-auto flex justify-center items-center gap-4">
+          <button className="bg-[#85B6FF] text-black w-[180px] h-[57px] rounded-[40px] text-lg font-bold">
+            Customise
+          </button>
+
+          <button className="bg-[#85B6FF] text-black w-[180px] h-[57px] rounded-[40px] text-lg font-bold">
+            Designs
+          </button>
+        </div>
 
         <div className="flex gap-5 items-center mt-10">
           {features.map((feature, index) => (
@@ -52,4 +58,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;
