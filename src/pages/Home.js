@@ -31,9 +31,11 @@ const Home = () => {
           Create your own snow globe
         </p>
 
-        <button className="bg-[#85B6FF] text-black w-[180px] h-[57px] rounded-[40px] text-lg mt-10 font-bold">
-          Get Started
-        </button>
+        <a href="/signin">
+          <button className="bg-[#85B6FF] text-black w-[180px] h-[57px] rounded-[40px] text-lg mt-10 font-bold">
+            Get Started
+          </button>
+        </a>
 
         <div className="flex gap-5 items-center mt-10">
           {features.map((feature, index) => (

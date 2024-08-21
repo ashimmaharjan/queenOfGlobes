@@ -7,12 +7,14 @@ import heroBackground from "./images/hero-bg.jpg";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
+import Gallery from "./pages/Gallery";
+import Shop from "./pages/Shop";
 
 function App() {
   return (
     <Router>
       <main
-        className="w-screen min-h-[100vh] bg-gray-500 bg-blend-multiply"
+        className="w-screen max-w-[2560px] mx-auto min-h-[100vh] bg-gray-500 bg-blend-multiply"
         style={{
           backgroundImage: `url(${heroBackground})`,
           backgroundSize: "cover",
@@ -26,6 +28,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </div>

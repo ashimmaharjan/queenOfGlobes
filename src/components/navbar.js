@@ -38,20 +38,41 @@ const Navbar = () => {
     <nav
       className={`transition-all duration-300 ease-in-out fixed
       ${isScrolled ? "bg-black/60 top-0 z-50" : "bg-transparent"}
-      flex justify-between items-center w-screen px-10 py-5 text-white`}
+      flex justify-between items-center w-screen max-w-[2560px] px-10 py-5 text-white`}
     >
-      <a href="/" className="font-serif text-[40px] leading-[68px] heading">
-        {sessionId !== null ? "CaseCrafter" : "Queen of Snow Globes"}
+      <a
+        href={sessionId !== null ? "/dashboard" : "/"}
+        className="font-serif text-[40px] leading-[68px] heading"
+      >
+        Queen of Snow Globes
       </a>
 
       <div className="flex items-center gap-8">
         {links.map((link, index) => (
-          <Link key={index} to={link.link} className="text-xl">
+          <Link
+            key={index}
+            to={
+              sessionId !== null && link.label === "Home"
+                ? "/dashboard"
+                : link.link
+            }
+            className="text-xl"
+          >
             {link.label}
           </Link>
         ))}
 
-        {!sessionId && (
+        {sessionId ? (
+          <Link
+            className="text-xl"
+            onClick={() => {
+              sessionStorage.clear();
+              window.location.href = "/";
+            }}
+          >
+            Logout
+          </Link>
+        ) : (
           <Link to="/signin" className="text-xl">
             Sign In
           </Link>
