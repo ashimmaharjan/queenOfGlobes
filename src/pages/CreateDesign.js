@@ -4,10 +4,20 @@ import { FaShapes, FaUpload } from "react-icons/fa6";
 import templates from "../utils/templates";
 import { snowDesigns, bases } from "../utils/elements";
 
+import SnowGblobeGlobal from "../images/templates/globe.jpg";
+import { ToastContainer, toast } from "react-toastify";
+
+import DummyLogo from "../images/dummy-logo.png";
+
 const CreateDesign = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Templates");
   const [projectName, setProjectName] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState({});
+  const [uploadedImages, setUploadedImages] = useState([]);
+
+  const [selectedBase, setSelectedBase] = useState("");
+  const [selectedSnowDesign, setSelectedSnowDesign] = useState("");
+  const [selectedLogo, setSelectedLogo] = useState("");
 
   const sideMenu = [
     {
@@ -47,22 +57,61 @@ const CreateDesign = () => {
     },
   ];
 
+  // Handle Active Menu Selection
   const handleMenuItemClick = (menuName) => {
     setSelectedMenuItem(menuName);
-    console.log("User selected:", menuName);
   };
 
+  // Handle Snow Globe Base Design Selection
   const handleBaseClick = (base) => {
     setSelectedTemplate((prevTemplate) => ({
       ...prevTemplate,
       base: base.image,
     }));
+
+    setSelectedBase(base.baseName);
+  };
+
+  // Handle Snow Design Selection
+  const handleSnowDesignClick = (snowDesign) => {
+    setSelectedTemplate((prevTemplate) => ({
+      ...prevTemplate,
+      snowDesign: snowDesign.image,
+    }));
+
+    setSelectedSnowDesign(snowDesign.snowDesign);
+  };
+
+  // Handle file upload
+  const handleFileUpload = (event) => {
+    const files = Array.from(event.target.files);
+
+    if (files.length + uploadedImages.length > 3) {
+      toast.warning("You can only upload a maximum of 3 images.");
+      return;
+    }
+
+    const images = files.filter((file) => file.type.startsWith("image/"));
+
+    if (images.length > 0) {
+      setUploadedImages((prevImages) => [...prevImages, ...images]);
+    }
+  };
+
+  // Handle Logo Selection
+  const handleUploadedImageSelection = (image) => {
+    setSelectedTemplate((prevTemplate) => ({
+      ...prevTemplate,
+      logo: image,
+    }));
+
+    setSelectedLogo(image);
   };
 
   return (
     <section>
       <div className="flex">
-        {/* Naviagtion Drawer */}
+        {/* Navigation Drawer */}
         <div className="w-[390px] h-screen bg-[#776C8D]/40 shadow-lg border-2 border-gray-500 border-l-0 flex">
           {/* Side Menu */}
           <div className="w-[120px] h-full bg-[#83859b]/40 flex flex-col gap-3 items-center py-5">
@@ -115,7 +164,11 @@ const CreateDesign = () => {
                       src={base.image}
                       alt={base.baseName}
                       onClick={() => handleBaseClick(base)}
-                      className="w-[180px] transition-all p-5 ease-in-out hover:bg-[#85B6FF] h-[100px] object-contain border border-white cursor-pointer rounded-lg shadow-md"
+                      className={`w-[180px] transition-all p-5 ease-in-out ${
+                        selectedBase === base.baseName
+                          ? "bg-[#85B6FF]"
+                          : "bg-none"
+                      } hover:bg-[#85B6FF] h-[100px] object-contain border border-white cursor-pointer rounded-lg shadow-md`}
                     />
                   </div>
                 ))}
@@ -131,10 +184,50 @@ const CreateDesign = () => {
                     <img
                       src={snowDesign.image}
                       alt={snowDesign.snowDesign}
-                      className="w-[180px] transition-all ease-in-out hover:ring-1 hover:ring-[#85B6FF] h-[100px] object-cover border border-white cursor-pointer rounded-lg shadow-md"
+                      onClick={() => handleSnowDesignClick(snowDesign)}
+                      className={`w-[180px] ${
+                        selectedSnowDesign === snowDesign.snowDesign
+                          ? "border-4 border-[#85B6FF]"
+                          : "border"
+                      } hover:border-2 hover:border-[#85B6FF] h-[100px] object-cover border border-white cursor-pointer rounded-lg shadow-md`}
                     />
                   </div>
                 ))}
+              </div>
+            )}
+
+            {selectedMenuItem === "Uploads" && (
+              <div className="p-2">
+                <label className="bg-[#85B6FF] text-black w-[170px] h-[50px] rounded-[40px] text-lg font-bold flex justify-center items-center transition-all duration-300 ease-in-out hover:ring-2 hover:ring-green-400 cursor-pointer">
+                  Upload File
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
+                </label>
+                <h3 className="text-lg font-bold text-white body-text mt-5">
+                  Uploads
+                </h3>
+                <div className="flex flex-wrap gap-3 mt-3">
+                  {uploadedImages.map((image, index) => (
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(image)}
+                      alt={`Upload ${index + 1}`}
+                      onClick={() =>
+                        handleUploadedImageSelection(URL.createObjectURL(image))
+                      }
+                      className={`w-[170px] h-[130px] ${
+                        selectedLogo === selectedTemplate.logo
+                          ? "bg-[#85B6FF]"
+                          : "bg-none"
+                      } object-contain border border-white rounded-lg shadow-md cursor-pointer`}
+                    />
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -170,34 +263,60 @@ const CreateDesign = () => {
               className="text-[25px] text-white font-bold bg-transparent border-b border-white outline-none w-full mt-10"
             />
 
-            <div className="w-full h-[500px] bg-gray-800/50 text-white mt-5 flex flex-col justify-center items-center">
+            <div className="w-full h-[520px] bg-gray-800/50 text-white mt-5 flex flex-col items-center pt-16">
               {Object.keys(selectedTemplate).length === 0 ? (
                 <p className="text-3xl font-bold">
                   Please select a template to begin.
                 </p>
               ) : (
                 <div className="flex flex-col justify-center items-center">
-                  <h3 className="font-semibold text-xl mb-5 text-left bg-sky-600/70 px-5 py-[10px]">
+                  <h3 className="font-semibold text-xl mb-10 text-left bg-sky-600/70 px-5 py-[10px] rounded-3xl rounded-tr-none shadow-gray-400 shadow-xl">
                     {selectedTemplate.templateName}
                   </h3>
                   {/* Snow Globe */}
-                  <img
-                    src={selectedTemplate.globe}
-                    alt={selectedTemplate.templateName}
-                    className="object-contain w-52 h-52 z-10 border-black border"
-                  />
-                  {/* Snow Glow Base */}
-                  <img
-                    src={selectedTemplate.base}
-                    alt={selectedTemplate.templateName}
-                    className="w-52 h-24 object-contain -mt-7 z-0"
-                  />
+                  <div className="relative flex justify-center items-center w-64 h-64">
+                    <img
+                      src={SnowGblobeGlobal}
+                      alt="Global Snow Globe"
+                      className="w-60 h-60 object-contain -mt-6 z-0 relative"
+                    />
+                    {/* Snow Design */}
+                    {selectedTemplate.snowDesign && (
+                      <div className="absolute -top-[3px] left-0 w-full h-full flex justify-center items-center">
+                        <img
+                          src={selectedTemplate.snowDesign}
+                          alt="Selected Snow Design"
+                          className="w-56 h-56 rounded-full bg-sky-300 object-cover"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Snow Globe Base */}
+                  <div className="relative w-48 h-24 -mt-[46px]">
+                    <img
+                      src={selectedTemplate.base}
+                      alt={selectedTemplate.templateName}
+                      className="w-48 h-24 object-contain z-[5]"
+                    />
+
+                    {selectedTemplate.logo && (
+                      <div className="absolute top-0 left-0 w-48 h-24 flex justify-center items-center">
+                        <img
+                          src={selectedTemplate.logo}
+                          className="w-14 h-14 object-cover overflow-hidden"
+                          alt="uploaded-logo"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

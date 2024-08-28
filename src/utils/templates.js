@@ -1,32 +1,30 @@
-import Template1Thumbnail from "../images/templates/template1.jpeg";
+import Template1Thumbnail from "../images/templates/template1.png";
 import Template2Thumbnail from "../images/templates/template2.png";
 import Template3Thumbnail from "../images/templates/template3.png";
 
-import Temp1gobe from "../images/templates/template1-globe.png";
-import Temp2gobe from "../images/templates/template2-globe.png";
-import Temp3gobe from "../images/templates/template3-globe.png";
+import Temp1base from "../images/elements/golden-base.png";
+import Temp2base from "../images/elements/stone-base.png";
+import Temp3base from "../images/elements/wooden-base.png";
 
-import Temp1base from "../images/templates/template1-base.png";
-import Temp2base from "../images/templates/template2-base.png";
-import Temp3base from "../images/templates/template3-base.png";
+import DefaultGlobeImage from "../images/templates/globe.jpg";
 
 const templates = [
   {
     templateName: "Template 1",
     thumbnailImage: Template1Thumbnail,
-    globe: Temp1gobe,
+    globe: DefaultGlobeImage,
     base: Temp1base,
   },
   {
     templateName: "Template 2",
     thumbnailImage: Template2Thumbnail,
-    globe: Temp2gobe,
+    globe: DefaultGlobeImage,
     base: Temp2base,
   },
   {
     templateName: "Template 3",
     thumbnailImage: Template3Thumbnail,
-    globe: Temp3gobe,
+    globe: DefaultGlobeImage,
     base: Temp3base,
   },
 ];
