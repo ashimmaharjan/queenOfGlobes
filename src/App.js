@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { NextUIProvider } from "@nextui-org/react";
 import Navbar from "./components/navbar";
 
 import About from "./pages/About";
@@ -16,52 +17,54 @@ import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
     <Router>
-      <main
-        className="w-screen max-w-[2560px] mx-auto min-h-[100vh] bg-gray-500 bg-blend-multiply"
-        style={{
-          backgroundImage: `url(${heroBackground})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-        }}
-      >
-        <Navbar />
-        <div className="mt-[108px]">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/shop" element={<Shop />} />
+      <NextUIProvider>
+        <main
+          className="w-screen max-w-[2560px] mx-auto min-h-[100vh] bg-gray-500 bg-blend-multiply"
+          style={{
+            backgroundImage: `url(${heroBackground})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+        >
+          <Navbar />
+          <div className="mt-[108px]">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/shop" element={<Shop />} />
 
-            {/* Protected Routes */}
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/designs"
-              element={
-                <ProtectedRoute>
-                  <Designs />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/create"
-              element={
-                <ProtectedRoute>
-                  <CreateDesign />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </div>
-      </main>
+              {/* Protected Routes */}
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/designs"
+                element={
+                  <ProtectedRoute>
+                    <Designs />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/create"
+                element={
+                  <ProtectedRoute>
+                    <CreateDesign />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </div>
+        </main>
+      </NextUIProvider>
     </Router>
   );
 }

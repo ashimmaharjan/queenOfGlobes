@@ -7,8 +7,6 @@ import { snowDesigns, bases } from "../utils/elements";
 import SnowGblobeGlobal from "../images/templates/globe.jpg";
 import { ToastContainer, toast } from "react-toastify";
 
-import DummyLogo from "../images/dummy-logo.png";
-
 const CreateDesign = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Templates");
   const [projectName, setProjectName] = useState("");
