@@ -22,29 +22,39 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = formState === "login" ? "/api/auth/login" : "/api/auth/signup";
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        sessionStorage.setItem("sessionId", data.userId);
-        sessionStorage.setItem("firstName", data.firstName);
-        sessionStorage.setItem("userEmail", data.email);
-        toast.success("Success! Redirecting to dashboard...");
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 500);
-      } else {
-        toast.error(data.message || "An error occurred. Please try again.");
+
+    if (formData.email === "admin@admin.com" && formData.password === "admin") {
+      sessionStorage.setItem("sessionId", "adminSession");
+      sessionStorage.setItem("firstName", "Admin");
+      sessionStorage.setItem("userEmail", "admin@admin.com");
+      toast.success("Success! Redirecting to admin dashboard...");
+      window.location.href = "/adminDashboard";
+    } else {
+      const url =
+        formState === "login" ? "/api/auth/login" : "/api/auth/signup";
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await response.json();
+        if (response.ok) {
+          sessionStorage.setItem("sessionId", data.userId);
+          sessionStorage.setItem("firstName", data.firstName);
+          sessionStorage.setItem("userEmail", data.email);
+          toast.success("Success! Redirecting to dashboard...");
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 500);
+        } else {
+          toast.error(data.message || "An error occurred. Please try again.");
+        }
+      } catch (error) {
+        toast.error("An error occurred. Please try again.");
       }
-    } catch (error) {
-      toast.error("An error occurred. Please try again.");
     }
   };
 
