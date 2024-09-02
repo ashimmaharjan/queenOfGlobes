@@ -34,6 +34,8 @@ const Signin = () => {
       const data = await response.json();
       if (response.ok) {
         sessionStorage.setItem("sessionId", data.userId);
+        sessionStorage.setItem("firstName", data.firstName);
+        sessionStorage.setItem("userEmail", data.email);
         toast.success("Success! Redirecting to dashboard...");
         setTimeout(() => {
           window.location.href = "/dashboard";

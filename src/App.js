@@ -13,6 +13,8 @@ import Shop from "./pages/Shop";
 import Designs from "./pages/Designs";
 import CreateDesign from "./pages/CreateDesign";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminDashboard from "./pages/AdminDashboard";
+import ShoppingCart from "./pages/ShoppingCart";
 
 function App() {
   return (
@@ -58,6 +60,22 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <CreateDesign />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/adminDashboard"
+                element={
+                  <ProtectedRoute>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/cart"
+                element={
+                  <ProtectedRoute>
+                    <ShoppingCart />
                   </ProtectedRoute>
                 }
               />

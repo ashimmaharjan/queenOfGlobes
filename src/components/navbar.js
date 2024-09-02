@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-import userImage from "../images/user-image.jpeg";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Avatar } from "@nextui-org/react";
+import { useCart } from "../components/CartContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { cart } = useCart();
 
   const sessionId = sessionStorage.getItem("sessionId");
 
@@ -33,6 +36,8 @@ const Navbar = () => {
     { site: "instagram", icon: <FaInstagram /> },
     { site: "linkedin", icon: <FaLinkedin /> },
   ];
+
+  const itemCount = cart.reduce((count, item) => count + item.quantity, 0); // Calculate total item count
 
   return (
     <nav
@@ -81,14 +86,18 @@ const Navbar = () => {
 
       <div className="flex items-center gap-4">
         {sessionId && (
-          <div className="w-10 h-10 rounded-full bg-[#D9D9D9] p-[2px] overflow-hidden cursor-pointer">
-            <img
-              src={userImage}
-              className="object-cover w-full h-full rounded-full"
-              alt="/user-image"
-              srcset=""
-            />
-          </div>
+          <>
+            <Avatar name={sessionStorage.getItem("firstName")} />
+
+            <Link to="/cart" className="relative text-2xl p-3">
+              <AiOutlineShoppingCart />
+              {itemCount > 0 && (
+                <span className="absolute top-1 right-1 bg-yellow-600 text-white text-xs rounded-full w-[18px] h-[18px] flex justify-center items-center overflow-hidden">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
+          </>
         )}
 
         {socialLinks.map((socialLink, index) => (
