@@ -9,40 +9,41 @@ import {
   Button,
 } from "@nextui-org/react";
 import { ToastContainer, toast } from "react-toastify";
-
 import { MdDeleteOutline } from "react-icons/md";
 
-function ManageOrders() {
-  const [orders, setOrders] = useState([]);
+function ManageCustomOrders() {
+  const [customOrders, setCustomOrders] = useState([]);
 
-  const fetchOrders = async () => {
+  // Fetch custom orders from the server
+  const fetchCustomOrders = async () => {
     try {
-      const response = await fetch("/api/orders");
+      const response = await fetch("/api/orders/customOrders");
       const data = await response.json();
 
       if (response.ok) {
-        setOrders(data);
+        setCustomOrders(data);
       } else {
-        toast.error("Failed to fetch orders.");
+        toast.error("Failed to fetch custom orders.");
       }
     } catch (error) {
-      toast.error("An error occurred while fetching orders.");
+      toast.error("An error occurred while fetching custom orders.");
     }
   };
 
+  // Handle delete custom order
   const handleDelete = async (orderNumber) => {
     try {
-      const response = await fetch(`/api/orders/delete/${orderNumber}`, {
+      const response = await fetch(`/api/orders/custom/delete/${orderNumber}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
-        toast.success("Order deleted successfully.");
-        // Fetch the updated orders after deletion
-        fetchOrders();
+        toast.success("Custom order deleted successfully.");
+        // Fetch the updated custom orders after deletion
+        fetchCustomOrders();
       } else {
         const data = await response.json();
-        toast.error(data.message || "Failed to delete order.");
+        toast.error(data.message || "Failed to delete custom order.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
@@ -50,48 +51,44 @@ function ManageOrders() {
   };
 
   useEffect(() => {
-    fetchOrders();
+    fetchCustomOrders();
   }, []);
 
   return (
     <section className="py-10">
-      <h1 className="text-2xl font-bold mb-4 text-white">Orders</h1>
-      <Table aria-label="Orders Table">
+      <h1 className="text-2xl font-bold mb-4 text-white">Custom Orders</h1>
+      <Table aria-label="Custom Orders Table">
         <TableHeader>
           <TableColumn>Order Number</TableColumn>
-          <TableColumn>Items</TableColumn>
-          <TableColumn>Image</TableColumn>
-          <TableColumn>Total</TableColumn>
+          <TableColumn>Project Name</TableColumn>
+          <TableColumn>Template</TableColumn>
+          <TableColumn>Base</TableColumn>
+          <TableColumn>Snow Design</TableColumn>
+          <TableColumn>Logo</TableColumn>
           <TableColumn>Customer Email</TableColumn>
           <TableColumn>Date</TableColumn>
           <TableColumn>Action</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={"No orders found."}>
-          {orders.map((order, index) => (
+        <TableBody emptyContent={"No custom orders found."}>
+          {customOrders.map((order, index) => (
             <TableRow key={index}>
               <TableCell>{order.orderNumber}</TableCell>
+              <TableCell>{order.projectName}</TableCell>
+              <TableCell>{order.template.templateName}</TableCell>
+              <TableCell>{order.template.base}</TableCell>
+              <TableCell>{order.template.snowDesign}</TableCell>
               <TableCell>
-                <ul>
-                  {order.cartItems.map((item, idx) => (
-                    <li key={idx}>
-                      {item.name} (x{item.quantity})
-                    </li>
-                  ))}
-                </ul>
-              </TableCell>
-              <TableCell>
-                {order.cartItems[0]?.image ? (
+                {order.template.logo ? (
                   <img
-                    src={order.cartItems[0].image}
-                    alt={order.cartItems[0].name}
+                    src={order.template.logo}
+                    alt="Logo"
                     className="h-16 w-16 object-cover"
                     loading="lazy"
                   />
                 ) : (
-                  "No image"
+                  "No logo"
                 )}
               </TableCell>
-              <TableCell>${order.total.toFixed(2)}</TableCell>
               <TableCell>{order.email}</TableCell>
               <TableCell>
                 {new Date(order.createdAt).toLocaleDateString()}
@@ -116,4 +113,4 @@ function ManageOrders() {
   );
 }
 
-export default ManageOrders;
+export default ManageCustomOrders;

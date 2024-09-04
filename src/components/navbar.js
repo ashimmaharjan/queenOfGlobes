@@ -10,6 +10,7 @@ const Navbar = () => {
   const { cart } = useCart();
 
   const sessionId = sessionStorage.getItem("sessionId");
+  const userRole = sessionStorage.getItem("userRole");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +47,13 @@ const Navbar = () => {
       flex justify-between items-center w-screen max-w-[2560px] px-10 py-5 text-white`}
     >
       <a
-        href={sessionId !== null ? "/dashboard" : "/"}
+        href={
+          sessionId !== null && userRole !== "admin"
+            ? "/dashboard"
+            : sessionId !== null && userRole === "admin"
+            ? "/adminDashboard"
+            : "/"
+        }
         className="font-serif text-[40px] leading-[68px] heading"
       >
         Queen of Snow Globes
@@ -57,8 +64,14 @@ const Navbar = () => {
           <Link
             key={index}
             to={
-              sessionId !== null && link.label === "Home"
+              sessionId !== null &&
+              link.label === "Home" &&
+              userRole !== "admin"
                 ? "/dashboard"
+                : sessionId !== null &&
+                  link.label === "Home" &&
+                  userRole === "admin"
+                ? "/adminDashboard"
                 : link.link
             }
             className="text-xl"
@@ -89,14 +102,16 @@ const Navbar = () => {
           <>
             <Avatar name={sessionStorage.getItem("firstName")} />
 
-            <Link to="/cart" className="relative text-2xl p-3">
-              <AiOutlineShoppingCart />
-              {itemCount > 0 && (
-                <span className="absolute top-1 right-1 bg-yellow-600 text-white text-xs rounded-full w-[18px] h-[18px] flex justify-center items-center overflow-hidden">
-                  {itemCount}
-                </span>
-              )}
-            </Link>
+            {userRole !== "admin" && (
+              <Link to="/cart" className="relative text-2xl p-3">
+                <AiOutlineShoppingCart />
+                {itemCount > 0 && (
+                  <span className="absolute top-1 right-1 bg-yellow-600 text-white text-xs rounded-full w-[18px] h-[18px] flex justify-center items-center overflow-hidden">
+                    {itemCount}
+                  </span>
+                )}
+              </Link>
+            )}
           </>
         )}
 

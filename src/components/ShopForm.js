@@ -109,20 +109,24 @@ function ShopForm() {
 
   return (
     <section className="py-10">
-      <button
-        onClick={onOpen}
-        className="flex justify-center items-center px-5 py-2 bg-sky-500 text-white ml-auto mb-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-sky-600 hover:shadow-inner gap-2"
-      >
-        <IoAdd />
-        Add Item
-      </button>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold text-white">Shop</h1>
+        <button
+          onClick={onOpen}
+          className="flex justify-center items-center px-5 py-2 bg-sky-500 text-white rounded-lg transition-all duration-200 ease-in-out hover:bg-sky-600 hover:shadow-inner gap-2"
+        >
+          <IoAdd />
+          Add Item
+        </button>
+      </div>
+
       <Table aria-label="Gallery Images Table">
         <TableHeader>
           <TableColumn>S.N.</TableColumn>
           <TableColumn>Item Name</TableColumn>
           <TableColumn>Price</TableColumn>
           <TableColumn>Image</TableColumn>
-          <TableColumn>Actions</TableColumn>
+          <TableColumn>Action</TableColumn>
         </TableHeader>
         <TableBody emptyContent={"No rows to display."}>
           {shopItems.map((shopItem, index) => (

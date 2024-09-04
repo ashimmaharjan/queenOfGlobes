@@ -27,6 +27,7 @@ const Signin = () => {
       sessionStorage.setItem("sessionId", "adminSession");
       sessionStorage.setItem("firstName", "Admin");
       sessionStorage.setItem("userEmail", "admin@admin.com");
+      sessionStorage.setItem("userRole", "admin"); // Set the role to admin
       toast.success("Success! Redirecting to admin dashboard...");
       window.location.href = "/adminDashboard";
     } else {
@@ -45,6 +46,7 @@ const Signin = () => {
           sessionStorage.setItem("sessionId", data.userId);
           sessionStorage.setItem("firstName", data.firstName);
           sessionStorage.setItem("userEmail", data.email);
+          sessionStorage.setItem("userRole", data.role);
           toast.success("Success! Redirecting to dashboard...");
           setTimeout(() => {
             window.location.href = "/dashboard";
@@ -91,6 +93,7 @@ const Signin = () => {
                 <button
                   onClick={() => setFormState("signup")}
                   className="text-blue-500 ml-1"
+                  type="button"
                 >
                   Create a new account
                 </button>
@@ -120,6 +123,7 @@ const Signin = () => {
                 <button
                   onClick={() => setFormState("login")}
                   className="text-blue-500 ml-1"
+                  type="button"
                 >
                   Signin
                 </button>

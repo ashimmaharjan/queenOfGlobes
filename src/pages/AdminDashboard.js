@@ -1,16 +1,21 @@
 import { GrGallery } from "react-icons/gr";
 import { AiOutlineShop } from "react-icons/ai";
-import { PiPackage } from "react-icons/pi";
+import { PiPackage, PiPaintBrushDuotone } from "react-icons/pi";
 import GalleryForm from "../components/GalleryForm";
 import { useState } from "react";
 import ShopForm from "../components/ShopForm";
 import ManageOrders from "../components/ManageOrders";
+import ManageCustomOrders from "../components/ManageCustomOrders";
 
 const AdminDashboard = () => {
   const adminTasks = [
     {
       task: "Manage Orders",
       icon: <PiPackage className="text-7xl" />,
+    },
+    {
+      task: "Custom Orders",
+      icon: <PiPaintBrushDuotone className="text-7xl" />,
     },
     {
       task: "Manage Shop",
@@ -33,7 +38,7 @@ const AdminDashboard = () => {
       <div>
         <h2 className="text-3xl font-bold text-gray-100">Welcome Admin!</h2>
 
-        <div className="grid grid-cols-3 gap-10 mt-10">
+        <div className="grid grid-cols-4 gap-10 mt-10">
           {adminTasks.map((adminTask, index) => (
             <div
               key={index}
@@ -58,6 +63,8 @@ const AdminDashboard = () => {
             <GalleryForm />
           ) : selectedTask === "Manage Shop" ? (
             <ShopForm />
+          ) : selectedTask === "Custom Orders" ? (
+            <ManageCustomOrders />
           ) : (
             <ManageOrders />
           )}
